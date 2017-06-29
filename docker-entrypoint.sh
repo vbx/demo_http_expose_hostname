@@ -3,6 +3,13 @@
 while true
 do 
         HOSTNAME=`hostname`
+	
         DATE=`date`
-	{ echo -e "HTTP/1.1 200 OK\r\nDate: $DATE\r\n"; echo ; echo $HOSTNAME; } | nc -l 8000
+	nc -l 8000 <<EOF
+HTTP/1.1 200 OK
+Date: $DATE
+Content-Length: ${#HOSTNAME}
+
+$HOSTNAME
+EOF
 done
